@@ -1,5 +1,5 @@
 {
-    "name": "bllem/dbal-clickhouse",
+    "name": "SmartProjectGMBH/dbal-clickhouse",
     "type": "library",
     "description": "Doctrine DBAL driver for ClickHouse",
     "keywords": [
@@ -8,7 +8,7 @@
         "clickhouse",
         "driver"
     ],
-    "homepage": "http://github.com/friendsofdoctrine/dbal-clickhouse",
+    "homepage": "http://github.com/SmartProjectGMBH/dbal-clickhouse",
     "license": "MIT",
     "authors": [
         {
