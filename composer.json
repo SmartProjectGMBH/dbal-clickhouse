@@ -1,5 +1,5 @@
 {
-    "name": "SmartProjectGMBH/dbal-clickhouse",
+    "name": "smartprojectgmbh/dbal-clickhouse",
     "type": "library",
     "description": "Doctrine DBAL driver for ClickHouse",
     "keywords": [
