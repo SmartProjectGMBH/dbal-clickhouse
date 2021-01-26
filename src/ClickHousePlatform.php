@@ -190,6 +190,22 @@ class ClickHousePlatform extends AbstractPlatform
             'array(nullable(string))' => 'array',
             'array(nullable(date))' => 'array',
             'array(nullable(datetime))' => 'array',
+
+            'aggregatefunction(max, int8)' => 'array',
+            'aggregatefunction(max, int16)' => 'array',
+            'aggregatefunction(max, int32)' => 'array',
+            'aggregatefunction(argmax, int8, int8)' => 'array',
+            'aggregatefunction(argmax, int8, int16)' => 'array',
+            'aggregatefunction(argmax, int8, int32)' => 'array',
+            'aggregatefunction(argmax, int16, int8)' => 'array',
+            'aggregatefunction(argmax, int16, int16)' => 'array',
+            'aggregatefunction(argmax, int16, int32)' => 'array',
+            'aggregatefunction(argmax, int32, int8)' => 'array',
+            'aggregatefunction(argmax, int32, int16)' => 'array',
+            'aggregatefunction(argmax, int32, int32)' => 'array',
+            'aggregatefunction(argmax, string, int8)' => 'array',
+            'aggregatefunction(argmax, string, int16)' => 'array',
+            'aggregatefunction(argmax, string, int32)' => 'array',
         ];
     }
 
