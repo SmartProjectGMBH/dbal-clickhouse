@@ -1080,7 +1080,7 @@ class ClickHousePlatform extends AbstractPlatform
      */
     public function getListTablesSQL() : string
     {
-        return "SELECT database, name FROM system.tables WHERE database != 'system' AND engine != 'View'";
+        return "SELECT database, name FROM system.tables WHERE database NOT IN ('system','_temporary_and_external_tables') AND engine != 'View'";
     }
 
     /**
