@@ -138,6 +138,7 @@ class ClickHousePlatform extends AbstractPlatform
             'decimal' => 'decimal',
 
             'string' => 'string',
+            'lowcardinality(string)' => 'string',
             'fixedstring' => 'string',
             'date' => 'date',
             'datetime' => 'datetime',
