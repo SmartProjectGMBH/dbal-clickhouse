@@ -176,6 +176,22 @@ class ClickHousePlatform extends AbstractPlatform
             'nullable(date)' => 'date',
             'nullable(datetime)' => 'datetime',
 
+            'lowcardinality(int8)' => 'smallint',
+            'lowcardinality(int16)' => 'integer',
+            'lowcardinality(int32)' => 'integer',
+            'lowcardinality(int64)' => 'bigint',
+            'lowcardinality(uint8)' => 'smallint',
+            'lowcardinality(uint16)' => 'integer',
+            'lowcardinality(uint32)' => 'integer',
+            'lowcardinality(uint64)' => 'bigint',
+            'lowcardinality(float32)' => 'decimal',
+            'lowcardinality(float64)' => 'float',
+
+            'lowcardinality(string)' => 'string',
+            'lowcardinality(fixedstring)' => 'string',
+            'lowcardinality(date)' => 'date',
+            'lowcardinality(datetime)' => 'datetime',
+
             'array(nullable(int8))' => 'array',
             'array(nullable(int16))' => 'array',
             'array(nullable(int32))' => 'array',
