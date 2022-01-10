@@ -790,6 +790,7 @@ class ClickHousePlatform extends AbstractPlatform
             $dateColumnParams['name'] = $eventDateColumnName;
             // insert into very beginning
             $columns = [$eventDateColumnName => $dateColumnParams] + $columns;
+            $engineOptions = ' PARTITION BY ' . $eventDateColumnName;
 
             /**
              * Primary key section
@@ -804,16 +805,15 @@ class ClickHousePlatform extends AbstractPlatform
                 $primaryIndex[]     = $options['samplingExpression'];
             }
 
-            $engineOptions = sprintf(
-                '(%s%s, (%s), %d',
-                $eventDateColumnName,
-                $samplingExpression,
-                implode(
-                    ', ',
-                    array_unique($primaryIndex)
-                ),
-                $indexGranularity
-            );
+            if ($primaryIndex) {
+                $engineOptions .= ' ORDER BY '.implode(', ', array_unique($primaryIndex));
+            }
+
+            if ($samplingExpression) {
+                $engineOptions .= ' SAMPLE BY '.$samplingExpression;
+            }
+
+            $engineOptions .= ' SETTINGS index_granularity = '.$indexGranularity;
 
             /**
              * any specific MergeTree* table parameters
@@ -838,11 +838,9 @@ class ClickHousePlatform extends AbstractPlatform
                         get_class($columns[$options['versionColumn']]['type']) . ' given.'
                     );
                 }
-
-                $engineOptions .= ', ' . $columns[$options['versionColumn']]['name'];
             }
 
-            $engineOptions .= ')';
+            $engine .= '('.$columns[$options['versionColumn']]['name'].')';
         }
 
         $sql[] = sprintf(
