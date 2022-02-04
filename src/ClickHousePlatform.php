@@ -818,7 +818,7 @@ class ClickHousePlatform extends AbstractPlatform
             /**
              * any specific MergeTree* table parameters
              */
-            if ($engine === 'ReplacingMergeTree' && ! empty($options['versionColumn'])) {
+            if ($engine === 'ReplacingMergeTree' &&  isset($options['versionColumn']) && ! empty($options['versionColumn'])) {
                 if (! isset($columns[$options['versionColumn']])) {
                     throw new \Exception(
                         'If you specify `versionColumn` for ReplacingMergeTree table -- 
