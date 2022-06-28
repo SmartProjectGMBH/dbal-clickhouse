@@ -840,7 +840,8 @@ class ClickHousePlatform extends AbstractPlatform
                 }
             }
 
-            $engine .= '('.$columns[$options['versionColumn']]['name'].')';
+            $versionColumn = isset($options['versionColumn']) ? $columns[$options['versionColumn']]['name'] : '';
+            $engine .= '('.$versionColumn.')';
         }
 
         $sql[] = sprintf(
