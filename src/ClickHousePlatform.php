@@ -141,6 +141,7 @@ class ClickHousePlatform extends AbstractPlatform
             'fixedstring' => 'string',
             'date' => 'date',
             'datetime' => 'datetime',
+            'bool' => 'boolean',
 
             'array(int8)' => 'array',
             'array(int16)' => 'array',
@@ -840,7 +841,8 @@ class ClickHousePlatform extends AbstractPlatform
                 }
             }
 
-            $engine .= '('.$columns[$options['versionColumn']]['name'].')';
+            $versionColumn = isset($options['versionColumn']) ? $columns[$options['versionColumn']]['name'] : '';
+            $engine .= '('.$versionColumn.')';
         }
 
         $sql[] = sprintf(
