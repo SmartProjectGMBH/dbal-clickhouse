@@ -278,7 +278,7 @@ class ClickHouseStatement implements \IteratorAggregate, Statement
         }
 
         $sql = $this->statement;
-
+        
         if ($hasZeroIndex) {
             $statementParts = explode('?', $sql);
             array_walk($statementParts, function (&$part, $key) : void {
@@ -290,14 +290,11 @@ class ClickHouseStatement implements \IteratorAggregate, Statement
             });
             $sql = implode('', $statementParts);
         } else {
-            foreach (array_keys($this->values) as $key) {
-                $sql = preg_replace(
-                    '/(' . (is_int($key) ? '\?' : ':' . $key) . ')/i',
-                    $this->getTypedParam($key),
-                    $sql,
-                    1
-                );
+            $statementParts = explode ('?', $sql);
+            foreach (array_keys($this->values) as $i => $key) {
+                $statementParts[$i + 1] = $this->getTypedParam($key).$statementParts[$i + 1];
             }
+            $sql = implode('', $statementParts);
         }
 
         $this->processViaSMI2($sql);
