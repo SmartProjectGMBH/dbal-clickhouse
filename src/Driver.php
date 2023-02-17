@@ -54,7 +54,7 @@ class Driver implements \Doctrine\DBAL\Driver
             throw new ClickHouseException('Connection parameter `dbname` is required');
         }
 
-        return new ClickHouseConnection($params, (string) $user, (string) $password, $this->getDatabasePlatform());
+        return $this->getDatabaseConnection($params, $user, $password);
     }
 
     /**
@@ -92,5 +92,10 @@ class Driver implements \Doctrine\DBAL\Driver
         }
 
         return $conn->fetchColumn('SELECT currentDatabase() as dbname');
+    }
+
+    protected function getDatabaseConnection(array $params, $user, $password)
+    {
+        return new ClickHouseConnection($params, (string)$user, (string)$password, $this->getDatabasePlatform());
     }
 }
