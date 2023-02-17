@@ -8,13 +8,13 @@ use Throwable;
 /**
  * Converts clickhouse server error response code into human-readable message
  */
-class ClickHouseServerQueryException extends RuntimeException
+class ClickHouseServerException extends RuntimeException
 {
     /**
      * This list is taken from official clickhouse GitHub repository
      * @see https://github.com/ClickHouse/ClickHouse/blob/master/src/Common/ErrorCodes.cpp
      */
-    private const CH_SERVER_CODES = [
+    protected const CH_SERVER_CODES = [
         0    => 'OK',
         1    => 'UNSUPPORTED_METHOD',
         2    => 'UNSUPPORTED_PARAMETER',
@@ -656,7 +656,7 @@ class ClickHouseServerQueryException extends RuntimeException
         parent::__construct($exception['message'], $exception['code'], $previous);
     }
 
-    private function parseRawException(string $message): array
+    protected function parseRawException(string $message): array
     {
         [, $code] = explode(': ', $message, 2);
 

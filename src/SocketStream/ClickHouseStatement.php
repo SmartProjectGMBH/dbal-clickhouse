@@ -41,6 +41,8 @@ class ClickHouseStatement extends \FOD\DBALClickHouse\ClickHouseStatement
 
     protected function executeSql(string $sql): void
     {
+        $sql .= ' SETTINGS max_execution_time = 0';
+
         $rawHttpMessage = "POST /" . $this->configuration->getServerConnectionParams() . " HTTP/1.1" . "\r\n";
         $rawHttpMessage .= "Host: " . $this->configuration->getHost() . ":" . $this->configuration->getPort() . "\r\n";
         $rawHttpMessage .= implode("\r\n", [
@@ -68,10 +70,14 @@ class ClickHouseStatement extends \FOD\DBALClickHouse\ClickHouseStatement
                 $processingBodyStarted = true;
             } elseif (!$processingBodyStarted && strpos($line, 'X-ClickHouse-Exception') !== false) {
                 // received error response from server
-                throw new ClickHouseServerQueryException($line);
+                throw new ClickHouseServerException($line);
             } elseif ($processingBodyStarted) {
                 // received data
                 $block = stream_get_line($this->socket, self::READ_BYTES, "\r\n");
+
+                if (strpos($block, 'DB::Exception') !== false) {
+                    throw new ClickHouseDBException($block);
+                }
 
                 yield from $this->responseParser->add($block)->row();
             }
