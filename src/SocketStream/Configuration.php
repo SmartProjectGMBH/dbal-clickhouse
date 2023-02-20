@@ -17,8 +17,8 @@ final class Configuration extends \Doctrine\DBAL\Configuration
     )
     {
         $this->_attributes['scheme']   = ($params['driverOptions']['https'] ?? false) ? 'http' : 'https';
-        $this->_attributes['host']     = $params['host'] ?? 'localhost';
-        $this->_attributes['port']     = $params['port'] ?? '8123';
+        $this->_attributes['host']     = (string)($params['host'] ?? 'localhost');
+        $this->_attributes['port']     = (string)($params['port'] ?? 8123);
         $this->_attributes['username'] = $username ?? '';
         $this->_attributes['password'] = $password ?? '';
 

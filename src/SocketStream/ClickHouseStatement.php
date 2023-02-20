@@ -41,23 +41,9 @@ class ClickHouseStatement extends \FOD\DBALClickHouse\ClickHouseStatement
 
     protected function executeSql(string $sql): void
     {
-        $sql .= ' SETTINGS max_execution_time = 0';
+        $rawHttpMessage = new ClickHouseRawHttpMessage($sql, $this->configuration);
 
-        $rawHttpMessage = "POST /" . $this->configuration->getServerConnectionParams() . " HTTP/1.1" . "\r\n";
-        $rawHttpMessage .= "Host: " . $this->configuration->getHost() . ":" . $this->configuration->getPort() . "\r\n";
-        $rawHttpMessage .= implode("\r\n", [
-            "Accept-Language: en-GB,en-US,q=0.9,en,q=0.8",
-            "Connection: keep-alive",
-            "Content-Type: application/x-www-form-urlencoded",
-            "X-Clickhouse-User: " . $this->configuration->getUsername(),
-            "X-Clickhouse-Key: " . $this->configuration->getPassword(),
-        ]);
-        $rawHttpMessage .= "\r\n";
-        $rawHttpMessage .= "Content-Length: " . strlen($sql) . "\r\n";
-        $rawHttpMessage .= "Connection: Close\r\n\r\n";
-        $rawHttpMessage .= $sql;
-
-        fwrite($this->socket, $rawHttpMessage, strlen($rawHttpMessage));
+        fwrite($this->socket, (string)$rawHttpMessage, $rawHttpMessage->length());
     }
 
     public function fetch($fetchMode = null, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0): \Generator
