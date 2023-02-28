@@ -297,7 +297,7 @@ class ClickHouseStatement implements \IteratorAggregate, Statement
             $sql = implode('', $statementParts);
         }
 
-        $this->processViaSMI2($sql);
+        $this->executeSql($sql);
 
         return true;
     }
@@ -320,7 +320,7 @@ class ClickHouseStatement implements \IteratorAggregate, Statement
      * If you want to use any other lib for working with CH -- just update this method
      *
      */
-    protected function processViaSMI2(string $sql) : void
+    protected function executeSql(string $sql) : void
     {
         $sql = trim($sql);
 
